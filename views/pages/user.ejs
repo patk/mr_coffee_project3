@@ -1,0 +1,16 @@
+<%- include('layout') -%>
+<h2>User:</h2>
+<table style="border: 1px solid black">
+  <tr>
+    <th>Firstname</th>
+    <th>Lastname</th>
+    <th>Email</th>
+    <th>Password</th>
+  </tr>
+  <tr>
+    <td><%= user.firstname %></td>
+    <td><%= user.lastname %></td>
+    <td><%= user.email %></td>
+    <td><%= user.password %></td>
+  </tr>
+</table>

@@ -1,0 +1,18 @@
+<%- include('layout') -%>
+<h2>User's schedule:</h2>
+<table style="border: 1px solid black">
+  <tr>
+    <th>User ID</th>
+    <th>Day</th>
+    <th>Start at</th>
+    <th>End at</th>
+  </tr>
+  <% for(let i = 0; i < userSchedule.length; i++) { %>
+  <tr>
+    <td><%= userSchedule[i].user_id %></td>
+    <td><%= userSchedule[i].day %></td>
+    <td><%= userSchedule[i].start_at %></td>
+    <td><%= userSchedule[i].end_at %></td>
+  </tr>
+  <% } %>
+</table>

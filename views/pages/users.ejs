@@ -1,0 +1,18 @@
+<%- include('layout') -%>
+<h2>All users:</h2>
+<table style="border: 1px solid black">
+  <tr>
+    <th>Firstname</th>
+    <th>Lastname</th>
+    <th>Email</th>
+    <th>Password</th>
+  </tr>
+  <% for(let i = 0; i < users.length; i++) { %>
+  <tr>
+    <td><%= users[i].firstname %></td>
+    <td><%= users[i].lastname %></td>
+    <td><%= users[i].email %></td>
+    <td><%= users[i].password %></td>
+  </tr>
+  <% } %>
+</table>

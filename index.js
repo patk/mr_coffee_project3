@@ -1,6 +1,7 @@
 const express = require("express");
 const db = require("./data.js");
 const app = express();
+const morgan = require("morgan");
 const PORT = 3000;
 
 // hashing password
@@ -12,36 +13,52 @@ const crypto = require("crypto");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// use morgan middleware in this app
+app.use(morgan("dev"));
+
+// set the view engine (in this case we are using EJS)
+app.set("view engine", "ejs");
+
 app.listen(PORT, () => {
   console.log("server is listening on localhost " + PORT);
 });
 
 app.get("/", (req, res) => {
-  res.send("Welcome to our schedule website");
+  res.render("pages/index");
 });
 
+// returns the list of all users
 app.get("/users", (req, res) => {
-  // returns the list of all users
-  res.json(db.users);
+  res.render("pages/users", {
+    // passing users object
+    users: db.users,
+  });
 });
 
+// returns the list of all schedules
 app.get("/schedules", (req, res) => {
-  // returns the list of all schedules
-  res.json(db.schedules);
+  res.render("pages/schedules", {
+    // passing schedules object
+    schedules: db.schedules,
+  });
 });
 
+// returns a specific user
 app.get("/users/:userId", (req, res) => {
-  // returns a specific user
-  res.send(db.users[req.params.userId]);
+  res.render("pages/user", {
+    user: db.users[req.params.userId],
+  });
 });
 
+// return all schedules of a specific user
 app.get("/users/:userId/schedules", (req, res) => {
-  // return all schedules of a specific user
   const scheduleArray = db.schedules;
   const userSchedule = scheduleArray.filter(
     (schedule) => schedule.user_id === Number(req.params.userId)
   );
-  res.send(userSchedule);
+  res.render("pages/user-schedule", {
+    userSchedule: userSchedule,
+  });
 });
 
 // post new user
