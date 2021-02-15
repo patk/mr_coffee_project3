@@ -1,0 +1,27 @@
+<%- include('layout') -%>
+<h2>New schedule:</h2>
+<form id="schedule-form" action="/schedules" method="post">
+  <label for="user_id">User ID: </label>
+  // TODO: try to display the full name of the user in a dropdown menu
+  <input type="number" id="user_id" name="user_id" required /> <br />
+
+  <label for="day">Day: </label>
+  <select name="day">
+    <option value="1">Monday (1)</option>
+    <option value="2">Tuesday (2)</option>
+    <option value="3">Wednesday (3)</option>
+    <option value="4">Thursday (4)</option>
+    <option value="5">Friday (5)</option>
+    <option value="6">Saturday (6)</option>
+    <option value="7">Sunday (7)</option>
+  </select>
+  <br />
+
+  <label for="start_at">Start at: </label>
+  <input type="time" id="start_at" name="start_at" required /> <br />
+
+  <label for="end_at">End at: </label>
+  <input type="time" id="end_at" name="end_at" required /> <br />
+
+  <button type="submit" form="schedule-form" value="Submit">Submit</button>
+</form>

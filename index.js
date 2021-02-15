@@ -44,7 +44,8 @@ app.get("/schedules", (req, res) => {
 });
 
 // returns a specific user
-app.get("/users/:userId", (req, res) => {
+app.get("/users/:userId(\\d+)/", (req, res) => {
+  // TODO: validate if user specified exist
   res.render("pages/user", {
     user: db.users[req.params.userId],
   });
@@ -59,6 +60,16 @@ app.get("/users/:userId/schedules", (req, res) => {
   res.render("pages/user-schedule", {
     userSchedule: userSchedule,
   });
+});
+
+// route to create a new user
+app.get("/users/new", (req, res) => {
+  res.render("pages/new-user");
+});
+
+// route to create a new schedule
+app.get("/schedules/new", (req, res) => {
+  res.render("pages/new-schedule");
 });
 
 // post new user
@@ -76,7 +87,7 @@ app.post("/users", (req, res) => {
     password: encryptedPassword,
   };
   db.users.push(newUser);
-  res.send("new user added");
+  res.redirect("/users");
 });
 
 // post new schedule
@@ -88,5 +99,5 @@ app.post("/schedules", (req, res) => {
     end_at: req.body.end_at,
   };
   db.schedules.push(newSchedule);
-  res.send("new schedule added");
+  res.redirect("/schedules");
 });
