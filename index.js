@@ -1,33 +1,38 @@
+// set up express
+// more info about express.json() and express.urlencoded:
+// https://stackoverflow.com/questions/23259168/what-are-express-json-and-express-urlencoded/51844327#:~:text=a.-,express.,use(express.
 const express = require("express");
-const db = require("./data.js");
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// set up database
+const db = require("./data.js");
+
+// set up morgan
+// use morgan middleware in this app
 const morgan = require("morgan");
-const PORT = 3000;
+app.use(morgan("dev"));
 
 // hashing password
 // https://www.youtube.com/watch?v=sfbFk84Cx6Q
 const crypto = require("crypto");
 
-// more info about express.json() and express.urlencoded:
-// https://stackoverflow.com/questions/23259168/what-are-express-json-and-express-urlencoded/51844327#:~:text=a.-,express.,use(express.
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// use morgan middleware in this app
-app.use(morgan("dev"));
-
-// set the view engine (in this case we are using EJS)
+// set up view engine (in this case we are using EJS)
 app.set("view engine", "ejs");
 
+// port
+const PORT = 3000;
 app.listen(PORT, () => {
   console.log("server is listening on localhost " + PORT);
 });
 
+// route to return an index (home) page
 app.get("/", (req, res) => {
   res.render("pages/index");
 });
 
-// returns the list of all users
+// route to return the list of all users
 app.get("/users", (req, res) => {
   res.render("pages/users", {
     // passing users object
@@ -35,7 +40,7 @@ app.get("/users", (req, res) => {
   });
 });
 
-// returns the list of all schedules
+// route to return the list of all schedules
 app.get("/schedules", (req, res) => {
   res.render("pages/schedules", {
     // passing schedules object
@@ -43,7 +48,7 @@ app.get("/schedules", (req, res) => {
   });
 });
 
-// returns a specific user
+// route to return a specific user
 app.get("/users/:userId(\\d+)/", (req, res) => {
   // TODO: validate if user specified exist
   res.render("pages/user", {
@@ -51,7 +56,7 @@ app.get("/users/:userId(\\d+)/", (req, res) => {
   });
 });
 
-// return all schedules of a specific user
+// route to return all schedules of a specific user
 app.get("/users/:userId/schedules", (req, res) => {
   const scheduleArray = db.schedules;
   const userSchedule = scheduleArray.filter(
@@ -72,7 +77,7 @@ app.get("/schedules/new", (req, res) => {
   res.render("pages/new-schedule");
 });
 
-// post new user
+// route to post new user
 app.post("/users", (req, res) => {
   // encrypt user password in SHA256
   const encryptedPassword = crypto
@@ -90,7 +95,7 @@ app.post("/users", (req, res) => {
   res.redirect("/users");
 });
 
-// post new schedule
+// route to post new schedule
 app.post("/schedules", (req, res) => {
   const newSchedule = {
     user_id: Number(req.body.user_id),
