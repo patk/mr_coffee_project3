@@ -1,2 +1,20 @@
 <%- include('layout') -%>
-<h2>Welcome to our schedule website</h2>
+<h2>Existing Schedules:</h2>
+<table style="border: 1px solid black">
+  <tr>
+    <th>User ID</th>
+    <th>Username</th>
+    <th>Day</th>
+    <th>Start at</th>
+    <th>End at</th>
+  </tr>
+  <% for(let i = 0; i < schedule.length; i++) { %>
+  <tr>
+    <td><%= schedule[i].user_id %></td>
+    <td><%= schedule[i].username %></td>
+    <td><%= schedule[i].day %></td>
+    <td><%= schedule[i].start_time %></td>
+    <td><%= schedule[i].end_time %></td>
+  </tr>
+  <% } %>
+</table>
