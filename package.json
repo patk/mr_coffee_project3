@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "create-schedule-table": "psql postgres -h localhost -d mr_coffee -f sql/create_schedule_table.sql",
+    "seed-schedule-table": "psql postgres -h localhost -d mr_coffee -f sql/seed_schedule_table.sql",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

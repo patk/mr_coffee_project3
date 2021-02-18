@@ -24,12 +24,18 @@ app.listen(PORT, () => {
 // route to retrieve the list of all existing schedules from the database
 app.get("/", (req, res) => {
   // select all fields from schedule table
-  database.any("SELECT * FROM schedule;").then((schedule) => {
-    console.log(schedule);
-    res.render("pages/index", {
-      schedule: schedule,
+  database
+    .any("SELECT * FROM schedule;")
+    .then((schedule) => {
+      res.render("pages/index", {
+        schedule: schedule,
+      });
+    })
+    .catch((err) => {
+      res.render("pages/error", {
+        err: err,
+      });
     });
-  });
 });
 
 // route to display a form to add a schedule
@@ -39,7 +45,6 @@ app.get("/new", (req, res) => {
 
 // route to post new schedule to the database
 app.post("/new", (req, res) => {
-  console.log(req.body);
   // get input values from the form
   const username = req.body.username;
   const day = Number(req.body.day);
@@ -55,6 +60,11 @@ app.post("/new", (req, res) => {
     .then((newSchedule) => {
       console.log(newSchedule);
       res.redirect("/new");
+    })
+    .catch((err) => {
+      res.render("pages/error", {
+        err: err,
+      });
     });
 });
 
