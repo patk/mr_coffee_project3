@@ -18,3 +18,12 @@
   </tr>
   <% } %>
 </table>
+
+<% for(let i = 0; i < schedule.length; i++) { %>
+<ul class="all_schedules">
+  <li>
+    <%= schedule[i].username %> - <%= schedule[i].day %> <%=
+    schedule[i].start_time %>-<%= schedule[i].end_time %>
+  </li>
+</ul>
+<% } %>
